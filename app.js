@@ -7,5 +7,4 @@ function Book(title, author, pages, read) {
         return `${title} by ${author}, ${pages} pages, ${read} yet`
     }
 }
-
 console.log(theHobbit.info());
