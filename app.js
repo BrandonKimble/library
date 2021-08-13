@@ -1,16 +1,16 @@
 // Selectors
-const bookTitle = document.querySelector('.title-input');
-const bookAuthor = document.querySelector('.author-input');
-const bookPages = document.querySelector('.pages-input');
-const bookRead = document.querySelector('.read-input');
-const addButton = document.querySelector('.add-button');
+const titleInput = document.querySelector('.title-input');
+const authorInput = document.querySelector('.author-input');
+const pagesInput = document.querySelector('.pages-input');
+const readInput = document.getElementById('read');
+const addButton = document.querySelector('.add-btn');
 const bookList = document.querySelector('.book-list');
 
 
-
 // Event Listeners
-addButton.addEventListener('click', addBook);
-
+addButton.addEventListener('click', addBookToLibrary);
+bookList.addEventListener('click', deleteBook);
+bookList.addEventListener('click', toggleRead);
 
 // Functions
 let myLibrary = [];
@@ -25,60 +25,78 @@ function Book(title, author, pages, read) {
     }
 }
 
-function addBookToLibrary(title, author, pages, read) {
+function addBookToLibrary(e) {
+    // Prevent form from submitting: 
+    e.preventDefault();
     // Grab book info from inputs
-    title = bookTitle.value;
-    author = bookAuthor.value;
-    pages = bookPages.value;
-    read = bookRead.value;
+    title = titleInput.value;
+    author = authorInput.value;
+    pages = pagesInput.value;
+    read = readInput.checked;
     // Push new book to library array
-    myLibrary.push(Book(title, author, pages, read));
+    const book = new Book(title, author, pages, read);
+    myLibrary.push(book);
+    document.forms[0].reset();
+    addBook(book);
 }
 
-
-function addBook(e, library) {
-    // Loop through array
-    for (let book in library) {
-
-    }
-    // Prevent form from submitting
-    e.preventDefault();
+function addBook(book) {
     // Create new book div
     const bookDiv = document.createElement('div');
-    bookDiv.classList.toggle('.book');
+    bookDiv.classList.add('book');
+    
     // Create title element
-    const title = document.createElement('li');
-    title.innerText = bookTitle.value;
-    title.classList.toggle('book-title');
-    bookDiv.appendChild(title);
-    // Create book info list
-    const bookInfo = document.createElement('ul');
-    bookInfo.classList.toggle('book-info');
+    const bookTitle = document.createElement('li');
+    bookTitle.innerText = book.title;   
+    bookTitle.classList.add('book-title');
+    bookDiv.appendChild(bookTitle);
+    
     // Create author element
-    const author = document.createElement('li');
-    author.classList.toggle('book-author');
-    bookInfo.appendChild(author);
+    const bookAuthor = document.createElement('li');
+    bookAuthor.innerText = book.author;
+    bookAuthor.classList.add('book-author');
+    bookDiv.appendChild(bookAuthor);
+    
     // Create pages element
-    const pages = document.createElement('li');
-    pages.classList.toggle('book-info');
-    bookInfo.appendChild(pages);
+    const bookPages = document.createElement('li');
+    bookPages.innerText = book.pages;
+    bookPages.classList.add('book-pages');
+    bookDiv.appendChild(bookPages);
+    
     // Create read button
     const readButton = document.createElement('button');
-    readButton.innerText = 'read';
-    readButton.classList.toggle('book-read');
-    bookInfo.appendChild(readButton);
+    // More logic is need here to sync the read button and checkbox
+    // readButton.innerText = book.read;
+    book.read ? readButton.innerText = 'read' : readButton.innerText = 'not read';
+    readButton.classList.add('read-btn');
+    bookDiv.appendChild(readButton);
+    
     // Create delete button
     const deleteButton = document.createElement('button');
     deleteButton.innerText = 'delete';
-    deleteButton.classList.toggle('delete');
-    bookInfo.appendChild(deleteButton);
-    // Add all book info to book div
-    bookDiv.appendChild(bookInfo);
+    deleteButton.classList.add('delete-btn');
+    bookDiv.appendChild(deleteButton);
+    
     // Add book div to book list
     bookList.appendChild(bookDiv);
-    // Clear input values
-    bookTitle.value = '';
-    bookAuthor.value = '';
-    bookPages.value = '';
-    bookRead.value = '';
+}
+
+function deleteBook(e) {
+    if (e.target.classList[0] === 'delete-btn') {
+        const book = e.target.parentElement.parentElement;
+        book.remove();
+        const title = book.firstChild.innerText;
+        myLibrary = myLibrary.filter(book => book.title !== title);
+    }
+}
+
+function toggleRead(e) {
+    readButton = e.target
+    let book = e.target.parentElement.parentElement;
+    const title = book.firstChild.innerText;
+    if (readButton.classList[0] === 'read-btn') {
+        readButton.innerText === 'read' ? readButton.innerText = 'not read' : readButton.innerText = 'read';
+        book = myLibrary.filter(book => book.title === title)[0];
+        book.read ? book.read = false : book.read = true;
+    }
 }

@@ -17,25 +17,23 @@
             <input type="text" placeholder="Title" class="title-input">
             <input type="text" placeholder="Author" class="author-input">
             <input type="text" placeholder="Pages" class="pages-input">
-            <label class="read-input-prompt" for="read">Have you finished this book?
-                <input type="checkbox" id="read" class="read-input">
+            <label class="read-input-prompt" for="read">I have read this book
+                <input type="checkbox" id="read" value="true">
             </label>
-            <button class="add-button" type="submit">Add Book</button>
+            <button class="add-btn" type="submit">Add Book</button>
         </form>
     </aside>
-    <div class="books-container">
-        <ul class="book-list">
-            <div class="book">
-                <li class="book-title"></li>
-                <ul class="book-info">
-                    <li class="book-author"></li>
-                    <li class="book-pages"></li>
-                    <button class="book-read">read</button>
-                    <button class="delete">delete</button>
-                </ul>
-            </div>
-        </ul>
-    </div>
+    <ul class="book-list">
+        <!-- <div class="book">
+            <li class="book-title"></li>
+            <ul class="book-info">
+                <li class="book-author"></li>
+                <li class="book-pages"></li>
+                <button class="read-btn">read</button>
+                <button class="delete-btn">delete</button>
+            </ul>
+        </div> -->
+    </ul>
     <script src="app.js"></script>
 </body>
 </html>
