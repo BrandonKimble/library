@@ -6,7 +6,7 @@ One of my first javascript projects! Here, I practiced manipulating the Document
 
 This is a simple web library with a form to fill out on the right with input fields for a book's title, author, pages read so far, and a checkbox to designate where you've completed the book. Next, hit the "Add Book" button to add this book to the library's display.
 
-### Contraints
+### Constraints
 
 For now, books do not remain in the library upon leaving the app. An object store will be implemented in the future via LocalStorage or a more robust/secure storage method. 
 
